@@ -9,13 +9,13 @@ typedef struct Pessoa {
     char nome[50];
     bool prioridade;
     Pessoa* pessoaDaFrente;  // Ponteiro para a pessoa na frente (anterior)
-    Pessoa* pessoaDeTras;    // Ponteiro para a pessoa atr·s (prÛximo)
+    Pessoa* pessoaDeTras;    // Ponteiro para a pessoa atr√°s (pr√≥ximo)
 } Pessoa;
 
 // Estrutura da fila
 typedef struct {
     Pessoa* primeira;  // Primeira pessoa da fila (frente)
-    Pessoa* ultima;    // ⁄ltima pessoa da fila (tras)
+    Pessoa* ultima;    // √öltima pessoa da fila (tras)
 } Fila;
 
 // Inicializa a fila vazia
@@ -24,7 +24,7 @@ void inicializarFila(Fila* f) {
     f->ultima = NULL;
 }
 
-// Verifica se a fila est· vazia
+// Verifica se a fila est√° vazia
 bool filaVazia(Fila* f) {
     return f->primeira == NULL;
 }
@@ -33,22 +33,22 @@ bool filaVazia(Fila* f) {
 void enfileirar(Fila* fila, const char* nome, int senha, bool prioridade) {
     Pessoa* nova = (Pessoa*)malloc(sizeof(Pessoa));
     if (!nova) {
-        std::cout << "Erro: memÛria insuficiente!" << std::endl;
+        std::cout << "Erro: mem√≥ria insuficiente!" << std::endl;
         return;
     }
 
     strcpy(nova->nome, nome);
     nova->senha = senha;
     nova->prioridade = prioridade;
-    nova->pessoaDeTras = NULL;      // NinguÈm atr·s dela (È a ˙ltima)
-    nova->pessoaDaFrente = fila->ultima; // A pessoa que estava atr·s agora fica na frente dela
+    nova->pessoaDeTras = NULL;      // Ningu√©m atr√°s dela (√© a √∫ltima)
+    nova->pessoaDaFrente = fila->ultima; // A pessoa que estava atr√°s agora fica na frente dela
 
     if (filaVazia(fila)) {
         fila->primeira = nova;
         fila->ultima = nova;
     } else {
-        fila->ultima->pessoaDeTras = nova;  // A antiga ˙ltima pessoa aponta para a nova
-        fila->ultima = nova;                 // Atualiza a ˙ltima pessoa
+        fila->ultima->pessoaDeTras = nova;  // A antiga √∫ltima pessoa aponta para a nova
+        fila->ultima = nova;                 // Atualiza a √∫ltima pessoa
     }
 }
 
@@ -57,18 +57,18 @@ Pessoa* desenfileirar(Fila* fila) {
     if (filaVazia(fila))
         return NULL;
 
-    Pessoa* remover = fila->primeira;
-    fila->primeira = remover->pessoaDeTras; // A prÛxima pessoa atr·s passa a ser a primeira
+    Pessoa* remover = fila->primeira; //remover aponta para o primeiro da fila
+    fila->primeira = remover->pessoaDeTras; // A nova "fila->primeira" passa a ser quem estava atr√°s da ultima pessoa removida
 
     if (fila->primeira != NULL)
-        fila->primeira->pessoaDaFrente = NULL; // Como È a primeira agora, n„o tem ninguÈm na frente
+        fila->primeira->pessoaDaFrente = NULL; // Como √© a primeira agora, n√£o tem ningu√©m na frente
     else
         fila->ultima = NULL; // A fila ficou vazia
 
-    return remover; // O chamador deve liberar a memÛria
+    return remover; // O chamador deve liberar a mem√≥ria
 }
 
-// Exibe a fila (do primeiro ao ˙ltimo)
+// Exibe a fila (do primeiro ao √∫ltimo)
 void exibirFila(Fila* fila, const char* titulo) {
     std::cout << "\n--- " << titulo << " ---\n";
 
@@ -81,13 +81,13 @@ void exibirFila(Fila* fila, const char* titulo) {
     while (atual != NULL) {
         std::cout << "Senha: " << atual->senha
                   << " | Nome: " << atual->nome
-                  << (atual->prioridade ? " (PRIORIT¡RIA)" : "")
+                  << (atual->prioridade ? " (PRIORIT√ÅRIA)" : "")
                   << std::endl;
-        atual = atual->pessoaDeTras;  // Vai para a pessoa atr·s (prÛxima na fila)
+        atual = atual->pessoaDeTras;  // Vai para a pessoa atr√°s (pr√≥xima na fila)
     }
 }
 
-// Libera toda a memÛria da fila
+// Libera toda a mem√≥ria da fila
 void liberarFila(Fila* fila) {
     Pessoa* atual = fila->primeira;
     while (atual != NULL) {
@@ -99,7 +99,7 @@ void liberarFila(Fila* fila) {
     fila->ultima = NULL;
 }
 
-// Menu interativo
+// Menu
 void menu() {
     Fila filaNormal, filaPrioritaria;
     inicializarFila(&filaNormal);
@@ -119,9 +119,9 @@ void menu() {
         std::cin.ignore();
 
         switch (opcao) {
-            case 1: {
+            case 1: { //adiciona poessoa
                 char nome[50];
-                int prio;
+                int prio; //prioridade
 
                 std::cout << "Digite o nome da pessoa: ";
                 std::cin.getline(nome, sizeof(nome));
@@ -187,4 +187,3 @@ int main() {
     menu();
     return 0;
 }
-
